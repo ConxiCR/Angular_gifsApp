@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GifsService {
+    //almacenamiento APIKey de GIP
+    private apiKey    : string = 'iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf';
     //propiedad privada para almacenar los strings. La inicializo bacia
     private _historial:string[] = [];
 
