@@ -26,6 +26,10 @@ export class BusquedaComponent {
     //console.log(this.txtBuscar);
     //queremos coger la informacion de la caja de texto y vaciarla
     const valor = this.txtBuscar.nativeElement.value;
+    //para evitar que se graben vacios. trim(para que no deje espacios en blanco). 
+    if(valor.trim().length === 0){
+      return;
+    }
     this.gifsService.buscarGifs( valor );
     //Una vez nos lo enseña en consola, lo borra
     this.txtBuscar.nativeElement.value = '';
