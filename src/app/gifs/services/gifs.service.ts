@@ -51,7 +51,7 @@ export class GifsService {
       //cambiamos las '' por badticks `` para poder incluir código en la dirección de la API. Queremos buscar el query
       this.http.get<SearchGifsResponse>(`${this.servicioUrl}/search`, { params })
           .subscribe( ( resp ) => {
-            console.log(resp.data);
+            //console.log(resp.data);
             //dentro de la respuesta viene la data
             this.resultados = resp.data;
             localStorage.setItem( 'resultados', JSON.stringify ( this.resultados ));
