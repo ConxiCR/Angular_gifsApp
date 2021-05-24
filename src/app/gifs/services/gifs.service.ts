@@ -20,7 +20,14 @@ export class GifsService {
     //Le ponemos un spert para que no se modifique el arreglo original. Se hace rompiendo la referencia
     return [...this._historial];
   }
-    constructor( private http:HttpClient ){}
+    //se va a ejecutar la primera vez que el servicio se llame una vez. Por lo que es el mejor sitio para ejecutar el localstorage
+    constructor( private http:HttpClient ){
+      //al borrar del localstorage la información lo borra todo porque le estoy enviando un arreglo bacio
+      this._historial = JSON.parse (localStorage.getItem( 'historial' )!) || []
+      //if(localStorage.getItem('historial')){
+        //this._historial = JSON.parse( localStorage.getItem('historial')!);
+      //}
+    }
 
   //Función para insertar valores al nuevo historial. query=termino de busqueda. unshift para insertar al inicio
   buscarGifs(query:string){
@@ -30,6 +37,9 @@ export class GifsService {
       if( !this._historial.includes( query )){
         this._historial.unshift( query ); 
         this._historial = this._historial.splice(0,10);
+        //localstorage. Como grabar. Nos dará el objeto como un arreglo
+        localStorage.setItem( 'historial', JSON.stringify(this._historial));
+
       }
       //las peticiones http(modulo) retornan los observables para que nos envie una respuesta de tipo get/post/delete/etc
       //cambiamos las '' por badticks `` para poder incluir código en la dirección de la API. Queremos buscar el query
