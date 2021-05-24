@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SearchGifsResponse, Gif } from '../interface/gifs.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GifsService {
-    //almacenamiento APIKey de GIP
-    private apiKey    : string = 'iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf';
+    //almacenamiento APIKey de GIP. Definimos las propiedades
+    private apiKey      : string = 'iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf';
+    private servicioUrl : string = 'https://api.giphy.com/v1/gifs';
     //propiedad privada para almacenar los strings. La inicializo bacia
-    private _historial:string[] = [];
+    private _historial  :string[] = [];
 
     //propiedad para almacenar la data de forma publica
     //cambiamos el any, ya que ahora si tenemos tipado. Será un arreglo de GIF
@@ -40,11 +41,15 @@ export class GifsService {
         this._historial = this._historial.splice(0,10);
         //localstorage. Como grabar. Nos dará el objeto como un arreglo
         localStorage.setItem( 'historial', JSON.stringify( this._historial ));
-
       }
+      //objeto para crear parametros para llamar a la HTTP. Definimos los pares de valores
+        const params = new HttpParams()
+            .set('api_key', this.apiKey)
+            .set('limit', '10')
+            .set('q', query);
       //las peticiones http(modulo) retornan los observables para que nos envie una respuesta de tipo get/post/delete/etc
       //cambiamos las '' por badticks `` para poder incluir código en la dirección de la API. Queremos buscar el query
-      this.http.get<SearchGifsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf&q=${ query } z&limit=10`)
+      this.http.get<SearchGifsResponse>(`${this.servicioUrl}/search`, { params })
           .subscribe( ( resp ) => {
             console.log(resp.data);
             //dentro de la respuesta viene la data
