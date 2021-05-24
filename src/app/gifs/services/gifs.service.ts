@@ -31,7 +31,7 @@ export class GifsService {
     }
 
   //Función para insertar valores al nuevo historial. query=termino de busqueda. unshift para insertar al inicio
-  buscarGifs(query:string){
+  buscarGifs(query:string = ''){
       //
       query = query.trim().toLowerCase();
       //como evitar duplicados. Sino lo incluye, sino esta incluido anteriormente, lo insertamos si o si sino existe

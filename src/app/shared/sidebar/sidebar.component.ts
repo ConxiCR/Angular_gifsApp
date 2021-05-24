@@ -16,6 +16,11 @@ export class SidebarComponent {
   //injectamos el servicio. se importa
   constructor( private gifsService:GifsService) { }
 
+//función para que al hacer click en el boton aparezcan las imágenes cada vez que se pulse
+  buscar( termino: string ){
+    this.gifsService.buscarGifs( termino )
+  }
+
   
 
 }
