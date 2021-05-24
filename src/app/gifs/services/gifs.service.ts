@@ -10,6 +10,10 @@ export class GifsService {
     //propiedad privada para almacenar los strings. La inicializo bacia
     private _historial:string[] = [];
 
+    //propiedad para almacenar la data de forma publica
+    //TODO: cambiar any por su tipo correspondiente
+    public resultados:any[] = [];
+
   get historial(){
 
     //Le ponemos un spert para que no se modifique el arreglo original. Se hace rompiendo la referencia
@@ -27,9 +31,11 @@ export class GifsService {
         this._historial = this._historial.splice(0,10);
       }
       //las peticiones http(modulo) retornan los observables para que nos envie una respuesta de tipo get/post/delete/etc
-      this.http.get('https://api.giphy.com/v1/gifs/search?api_key=iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf&q=dragon Ball z&limit=10')
-          .subscribe( (resp:any) => {
+      //cambiamos las '' por badticks `` para poder incluir código en la dirección de la API. Queremos buscar el query
+      this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=iBJWWU0yXxp296cgPWWgeQ7S7NTa7Zxf&q=${ query } z&limit=10`)
+          .subscribe( ( resp:any ) => {
             console.log(resp.data);
+            this.resultados = resp.data;
           });
       //cuando alguien acceda al historial corta la cantidad máxima de apuntes
       //console.log(this._historial);

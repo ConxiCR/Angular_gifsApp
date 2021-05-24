@@ -1,3 +1,25 @@
-<div class="col">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam odit animi quis non beatae minima voluptatum itaque eligendi, id mollitia atque ducimus incidunt accusantium architecto quos laudantium sint rerum dolore.
+<!--el tittle viene de las condiciones que tiene dentro de la llamada-->
+<!--<ul>
+    <li *ngFor="let gif of resultados">        
+        {{ gif.title }}
+    </li>
+</ul>-->
+<div class="row">
+    <div *ngFor="let gif of resultados"
+        class="col-md-4 col-sm-6">
+        <div class="card">
+            <!--le indico la dirección y el tamaño de las imagenes. Pongo el source entre [] para que no lo lea como un string sino como código-->
+            <img    [src]="gif.images.downsized_medium.url" 
+                    [alt]="gif.title"
+                    class="card-img-top"
+                    >
+            <div class="card-body">
+                <p class="card-text">
+                    <!--ponemos las propiedades que posee en la API-->
+                    {{ gif.title }} 
+                    <!--{{ gif.images.downsized_medium.url }}-->
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
