@@ -23,7 +23,8 @@ export class GifsService {
     //se va a ejecutar la primera vez que el servicio se llame una vez. Por lo que es el mejor sitio para ejecutar el localstorage
     constructor( private http:HttpClient ){
       //al borrar del localstorage la información lo borra todo porque le estoy enviando un arreglo bacio
-      this._historial = JSON.parse (localStorage.getItem( 'historial' )!) || []
+      this._historial = JSON.parse (localStorage.getItem( 'historial' )!) || [];
+      this.resultados = JSON.parse(localStorage.getItem('resultados')!) || [];
       //if(localStorage.getItem('historial')){
         //this._historial = JSON.parse( localStorage.getItem('historial')!);
       //}
@@ -38,7 +39,7 @@ export class GifsService {
         this._historial.unshift( query ); 
         this._historial = this._historial.splice(0,10);
         //localstorage. Como grabar. Nos dará el objeto como un arreglo
-        localStorage.setItem( 'historial', JSON.stringify(this._historial));
+        localStorage.setItem( 'historial', JSON.stringify( this._historial ));
 
       }
       //las peticiones http(modulo) retornan los observables para que nos envie una respuesta de tipo get/post/delete/etc
@@ -48,8 +49,9 @@ export class GifsService {
             console.log(resp.data);
             //dentro de la respuesta viene la data
             this.resultados = resp.data;
+            localStorage.setItem( 'resultados', JSON.stringify ( this.resultados ));
             //typescript ayuda con el tipado
-            resp.data[0].images.downsized_medium.url;
+            //resp.data[0].images.downsized_medium.url;
           });
       //cuando alguien acceda al historial corta la cantidad máxima de apuntes
       //console.log(this._historial);
